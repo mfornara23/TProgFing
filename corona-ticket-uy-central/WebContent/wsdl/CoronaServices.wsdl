@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://publicador.ws.coronatickets.tpgr06" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://publicador.ws.coronatickets.tpgr06" xmlns:intf="http://publicador.ws.coronatickets.tpgr06" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://publicador.ws.coronatickets.tpgr06" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="buscarEspectaculos">
+    <complexType>
+     <sequence>
+      <element name="key" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="buscarEspectaculosResponse">
+    <complexType>
+     <sequence>
+      <element name="buscarEspectaculosReturn" type="impl:ArrayOf_xsd_anyType"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_anyType">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <element name="listarCategorias">
+    <complexType/>
+   </element>
+   <element name="listarCategoriasResponse">
+    <complexType>
+     <sequence>
+      <element name="listarCategoriasReturn" type="impl:ArrayOf_xsd_anyType"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="listarCategoriasRequest">
+
+      <wsdl:part element="impl:listarCategorias" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="listarCategoriasResponse">
+
+      <wsdl:part element="impl:listarCategoriasResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="buscarEspectaculosRequest">
+
+      <wsdl:part element="impl:buscarEspectaculos" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="buscarEspectaculosResponse">
+
+      <wsdl:part element="impl:buscarEspectaculosResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="CoronaServices">
+
+      <wsdl:operation name="buscarEspectaculos">
+
+         <wsdl:input message="impl:buscarEspectaculosRequest" name="buscarEspectaculosRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:buscarEspectaculosResponse" name="buscarEspectaculosResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listarCategorias">
+
+         <wsdl:input message="impl:listarCategoriasRequest" name="listarCategoriasRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:listarCategoriasResponse" name="listarCategoriasResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="CoronaServicesSoapBinding" type="impl:CoronaServices">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="buscarEspectaculos">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="buscarEspectaculosRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="buscarEspectaculosResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listarCategorias">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listarCategoriasRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listarCategoriasResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="CoronaServicesService">
+
+      <wsdl:port binding="impl:CoronaServicesSoapBinding" name="CoronaServices">
+
+         <wsdlsoap:address location="http://localhost:8083/corona-ticket-uy-central/services/CoronaServices"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

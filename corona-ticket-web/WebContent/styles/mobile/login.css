@@ -1,0 +1,16 @@
+.login-container {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.boton-confirmar {
+    width: fit-content;
+    align-self: flex-end;
+}
+
+.login-box {
+    max-width: 80%;
+}

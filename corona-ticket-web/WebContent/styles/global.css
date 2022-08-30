@@ -1,0 +1,257 @@
+body {
+  --light-blue: rgba(52, 131, 250, 0.8);
+  --light-blue-cancel: rgba(52, 131, 250, 0.3);
+  --light-blue-cancel-hover: rgba(52, 131, 250, 0.6);
+  --light-blue-hover: #1259c3;
+  --input-blue: rgba(230, 237, 248, 0.8);
+  --light-gray: rgba(0, 0, 0, 0.8);
+  --light-bg-gray: rgba(0, 0, 0, 0.1);
+  --light-bg-green: rgba(0, 166, 80, 0.1);
+  --green: rgba(0, 166, 80, 0.80);
+  --light-bg-red: rgba(242, 61, 79, 0.1);
+  --red: rgba(242, 61, 79, 0.80);
+}
+
+#wrapper {
+  overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#go-back {
+  color: var(--light-blue);
+  width: fit-content;
+  cursor: pointer;
+  margin: 0 19px 5px 0;
+}
+#go-back:hover {
+  color: var(--light-blue-hover);
+}
+
+#triggerModal {
+  display:none;
+}
+
+input {
+  background-color: var(--input-blue);
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid var(--light-gray);
+  font-size: 15px;
+}
+
+select {
+  background-color: var(--input-blue);
+  height: 35px;
+  border-radius: 4px;
+  border: 1px solid var(--light-gray);
+  font-size: 15px;
+  padding: 0 10px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+.button {
+  padding: 5px 25px !important;
+  height: 36px !important;
+}
+
+
+.button-cancel {
+  padding: 5px 25px !important;
+  height: 36px !important;
+  background-color: var(--light-blue-cancel);
+  color: var(--light-gray);
+}
+
+.button-cancel:hover {
+  background-color: var(--light-blue-cancel-hover);
+  color: var(--light-gray);
+}
+
+
+textarea {
+  background-color: var(--input-blue);
+  border-radius: 4px;
+  border: 1px solid var(--light-gray);
+}
+
+/* Títulos de las páginas y su contenedor */
+.title {
+  font-size: 30px;
+}
+
+.subtitle {
+  font-size: 17px;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.subtitle-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.main-container {
+  width: 100%;
+  padding: 10px 43px 80px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.main-alta-container {
+  width: 80%;
+  padding: 10px 25px 25px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid;
+  border-radius: 6px;
+}
+
+.alta-title {
+  display: flex;
+  margin: 16px 0;
+  width: 50%;
+  justify-content: space-between;
+}
+
+.alta-sub-container {
+  justify-content: space-between;
+  display: flex;
+}
+
+.alta-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 14px;
+  margin: 8px;
+  font-weight: 600;
+}
+
+#slogan {
+  margin-top: 8px;
+}
+
+.menu-toggle {
+  height: 39px;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+
+.header-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 50px 0 0;
+}
+
+.list-row {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px 15px;
+  margin: 5px 0;
+  width: fit-content;
+  cursor: pointer;
+  text-decoration: none !important;
+  font-size: 15px;
+  align-items: center;
+  color: var(--light-gray);
+}
+
+.list-row:hover {
+  background-color: #e6e8eb;
+  color: var(--light-gray) !important;
+}
+
+/*badges */
+.status-badge {
+  border-radius: 6px;
+  align-content: center;
+  padding: 2px 15px;
+  font-size: 14px;
+  width: fit-content;
+  height: fit-content;
+  font-weight: 600;
+}
+.rejected {
+  border: 1px solid var(--red);
+  background-color: var(--light-bg-red);
+  color: var(--red);
+}
+
+.approved {
+  border: 1px solid var(--green);
+  background-color: var(--light-bg-green);
+  color: var(--green);
+}
+
+.pending {
+  border: 1px solid var(--light-gray);
+  background-color: var(--light-bg-gray);
+  color: var(--light-gray);
+}
+
+.login-container {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid;
+  align-items: center;
+  height: 300px;
+  border-radius: 6px;
+  margin: 0 90px;
+  padding: 20px;
+}

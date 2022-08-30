@@ -1,0 +1,98 @@
+.espectaculos-container {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.filter {
+    padding: 5px 5px 0;
+    width: 35%
+}
+
+.filter-input {
+    width: 100%;
+}
+
+.espectaculo-data-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.espectadores-data {
+    justify-content: space-between;
+    width: 50%;
+    align-self: flex-end;
+}
+
+.espectadores-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.additional-data-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.span_right_item {
+    font-size: 15px;
+}
+
+.espectaculos-title {
+    justify-content: center;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.main-info {
+    display: flex;
+    margin: 0 0 10px;
+}
+
+.with-subtitle {
+    flex-direction: column;
+}
+
+.espectaculo-row-data {
+    font-size: 3.5vw;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .espectaculo-data-container {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        margin: 5px 0;
+        width: 65%;
+    }
+
+    .espectadores-container {
+        display: flex;
+        flex-direction: column;
+        width: 65%;
+    }
+    .main-detalle {
+        padding: 20px;
+        display: flex;
+    }
+
+    .left-column {
+        width: 70%;
+        padding: 20px;
+    }
+
+    .right-column {
+        width: 30%;
+        padding: 20px;
+    }
+}

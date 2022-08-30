@@ -1,0 +1,38 @@
+.function-row {
+    display: grid;
+    grid-template-columns: 50px 240px 200px 140px 160px 40px;
+    width: 100%;
+}
+
+.function-row-data {
+    align-self: center;
+}
+
+.tabcontent {
+    display: block;
+    padding: 20px;
+    border: 1px solid #ccc;
+    min-height: 400px;
+}
+
+.funcion-data-container {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.info-espectaculo {
+    cursor: pointer;
+    text-decoration: none !important;
+    color: var(--light-gray);
+}
+
+.register {
+    align-self: center;
+}
+
+.register:hover {
+    color: var(--light-blue-hover);
+    cursor: pointer;
+}

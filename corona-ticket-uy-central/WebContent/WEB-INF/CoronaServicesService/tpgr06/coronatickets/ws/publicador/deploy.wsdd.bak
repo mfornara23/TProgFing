@@ -1,0 +1,70 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from CoronaServicesService WSDL service -->
+
+  <service name="CoronaServices" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://publicador.ws.coronatickets.tpgr06"/>
+      <parameter name="wsdlServiceElement" value="CoronaServicesService"/>
+      <parameter name="schemaQualified" value="http://publicador.ws.coronatickets.tpgr06"/>
+      <parameter name="wsdlServicePort" value="CoronaServices"/>
+      <parameter name="className" value="tpgr06.coronatickets.ws.publicador.CoronaServicesSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="CoronaServices"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="buscarEspectaculos" qname="operNS:buscarEspectaculos" xmlns:operNS="http://publicador.ws.coronatickets.tpgr06" returnQName="retNS:buscarEspectaculosReturn" xmlns:retNS="http://publicador.ws.coronatickets.tpgr06" returnType="rtns:ArrayOf_xsd_anyType" xmlns:rtns="http://publicador.ws.coronatickets.tpgr06" returnItemQName="tns:item" xmlns:tns="http://publicador.ws.coronatickets.tpgr06" soapAction="" >
+        <parameter qname="pns:key" xmlns:pns="http://publicador.ws.coronatickets.tpgr06" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="listarCategorias" qname="operNS:listarCategorias" xmlns:operNS="http://publicador.ws.coronatickets.tpgr06" returnQName="retNS:listarCategoriasReturn" xmlns:retNS="http://publicador.ws.coronatickets.tpgr06" returnType="rtns:ArrayOf_xsd_anyType" xmlns:rtns="http://publicador.ws.coronatickets.tpgr06" returnItemQName="tns:item" xmlns:tns="http://publicador.ws.coronatickets.tpgr06" soapAction="" >
+      </operation>
+      <parameter name="allowedMethods" value="buscarEspectaculos listarCategorias"/>
+
+      <typeMapping
+        xmlns:ns="http://publicador.ws.coronatickets.tpgr06"
+        qname="ns:>listarCategorias"
+        type="java:tpgr06.coronatickets.ws.publicador.ListarCategorias"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://publicador.ws.coronatickets.tpgr06"
+        qname="ns:>listarCategoriasResponse"
+        type="java:tpgr06.coronatickets.ws.publicador.ListarCategoriasResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://publicador.ws.coronatickets.tpgr06"
+        qname="ns:>buscarEspectaculosResponse"
+        type="java:tpgr06.coronatickets.ws.publicador.BuscarEspectaculosResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://publicador.ws.coronatickets.tpgr06"
+        qname="ns:>buscarEspectaculos"
+        type="java:tpgr06.coronatickets.ws.publicador.BuscarEspectaculos"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://publicador.ws.coronatickets.tpgr06"
+        qname="ns:ArrayOf_xsd_anyType"
+        type="java:java.lang.Object[]"
+        innerType="cmp-ns:anyType" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

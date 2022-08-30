@@ -1,0 +1,327 @@
+package com.tpgr06.coronatickets.servlets.paquetes;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import javax.servlet.RequestDispatcher;
+import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
+import com.tpgr06.coronatickets.utils.ImgUtils;
+
+import tpgr06.coronatickets.sys.Factory;
+import tpgr06.coronatickets.sys.Utils;
+<<<<<<< HEAD
+import tpgr06.coronatickets.sys.espectaculo.EspectaculoDTO;
+=======
+import tpgr06.coronatickets.sys.espectaculo.EstadoEspectaculo;
+>>>>>>> c0b3ecf0f6afe3c3155ad9d7b401fa414cd076db
+import tpgr06.coronatickets.sys.exceptions.BadRequestException;
+import tpgr06.coronatickets.sys.exceptions.NotFoundException;
+import tpgr06.coronatickets.sys.paquete.IPaqueteController;
+import tpgr06.coronatickets.sys.paquete.PaqueteDTO;
+
+/**
+ * Servlet implementation class PaqueteServlet
+ */
+@WebServlet("/PaqueteServlet")
+@MultipartConfig
+public class PaqueteServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private IPaqueteController paqueteController;
+	private static Pattern LTRIM = Pattern.compile("^\\s+");
+	private static Pattern RTRIM = Pattern.compile("\\s+$");
+
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public PaqueteServlet() {
+		super();
+	}
+
+	/**
+	 * @see Servlet#init(ServletConfig)
+	 */
+	public void init(ServletConfig config) throws ServletException {
+
+		paqueteController = Factory.getInstance().getIPaqueteController();
+
+		try {
+			Utils.cargarDatosDePrueba();
+		} catch (BadRequestException | NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		try {
+			HttpSession session = request.getSession();
+
+			if (request.getParameter("page")!=null && "listar".equals(request.getParameter("page"))) {
+				listarPaquetes(request, response);
+
+
+			}else if (request.getParameter("page")!=null && "agregar".equals(request.getParameter("page"))) {
+				session.setAttribute("paquete", request.getParameter("paq") );
+				request.setAttribute("plataformaList", paqueteController.listarPlataformas() );
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/paquetes/agregar-espectaculo-a-paquete.jsp");
+				dispatcher.forward(request, response);
+
+
+			}else if(request.getParameter("plat_espec")!=null ) {
+
+				List<EspectaculoDTO> espectaculos = paqueteController
+						.listarEspectaculosNoEnPaquete((String) session.getAttribute("paquete"), request.getParameter("plat_espec"));
+				request.setAttribute("espectaculoNoEnPaqueteList", espectaculos);
+				request.setAttribute("plataformaList", paqueteController.listarPlataformas());
+
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/paquetes/agregar-espectaculo-a-paquete.jsp");
+				dispatcher.forward(request, response);
+<<<<<<< HEAD
+
+			}else {
+
+				if (request.getParameter("page")!=null && "alta".equals(request.getParameter("page"))) {
+
+					if (session.getAttribute("tipousuario")==null || !"artista".equals(session.getAttribute("tipousuario").toString())) {
+						request.setAttribute("errorMsg", "No tiene permisos para acceder a este recurso");
+						RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/errores/error-generico.jsp");
+						dispatcher.forward(request, response);
+=======
+				
+			} else {
+				String nombrePaquete = RTRIM.matcher(LTRIM.matcher(request.getParameter("nombre_paquete")).replaceAll("")).replaceAll("");
+				try {
+					PaqueteDTO paquete = paqueteController.consultaPaquete(nombrePaquete);
+					paquete.setEspectaculos(paquete.getEspectaculos().stream().filter(esp -> !EstadoEspectaculo.FINALIZADO.equals(esp.getEstado())).collect(Collectors.toList()));
+					request.setAttribute("paquete", paquete);
+					request.setAttribute("categorias", paqueteController.listarCategoriasByPaquete(nombrePaquete));
+
+					if (esVigente(new Date(), paquete)) {
+						request.setAttribute("vigencia", "Vigente");
+						request.setAttribute("cssStatus", "approved");
+					} else {
+						request.setAttribute("vigencia", "Inactivo");
+						request.setAttribute("cssStatus", "rejected");
+					}
+					
+					//Habilito o deshabilito el boton de comprar paquete
+					if("espectador".equals(session.getAttribute("tipousuario"))) {
+							request.setAttribute("compraVisible", "visible");
+					} else {
+							request.setAttribute("compraVisible", "hidden");
+>>>>>>> c0b3ecf0f6afe3c3155ad9d7b401fa414cd076db
+					}
+					RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/paquetes/alta-paquete.jsp");
+					dispatcher.forward(request, response);
+
+				} else if (request.getParameter("nombre_paquete")==null || "".equals(request.getParameter("nombre_paquete"))) {
+					request.setAttribute("errorMsg", "La pagina se encuentra en construccion");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/errores/error-generico.jsp");
+					dispatcher.forward(request, response);
+
+				} else {
+					String nombrePaquete = RTRIM.matcher(LTRIM.matcher(request.getParameter("nombre_paquete")).replaceAll("")).replaceAll("");
+					try {
+						PaqueteDTO paquete = paqueteController.consultaPaquete(nombrePaquete);
+						request.setAttribute("paquete", paquete);
+						request.setAttribute("categorias", paqueteController.listarCategoriasByPaquete(nombrePaquete));
+
+						if (esVigente(new Date(), paquete)) {
+							request.setAttribute("vigencia", "Vigente");
+							request.setAttribute("cssStatus", "approved");
+						} else {
+							request.setAttribute("vigencia", "Inactivo");
+							request.setAttribute("cssStatus", "rejected");
+						}
+
+						//Habilito o deshabilito el boton de comprar paquete
+						if("espectador".equals(session.getAttribute("tipousuario"))) {
+							request.setAttribute("compraVisible", "visible");
+						} else {
+							request.setAttribute("compraVisible", "hidden");
+						}
+
+
+
+						//Habilito o deshabilito el boton de agregar espectaculo a paquete
+						if("artista".equals(session.getAttribute("tipousuario"))) {
+							request.setAttribute("agregarEspectaculoVisible", "visible");
+						}else {
+							request.setAttribute("agregarEspectaculoVisible", "hidden");
+						}
+
+						RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/paquetes/detalle-paquete.jsp");
+						dispatcher.forward(request, response);
+
+					} catch (NotFoundException e) {
+						request.setAttribute("errorMsg", "Hubo un problema al procesar su solicitud: "+e.getMessage());
+						RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/errores/error-generico.jsp");
+						dispatcher.forward(request, response);
+					}
+				}
+			}
+		} catch (Exception e) {
+			request.setAttribute("errorMsg", "Hubo un problema al procesar su solicitud: "+e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/errores/error-generico.jsp");
+			dispatcher.forward(request, response);
+		}
+
+	}
+
+	private void listarPaquetes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		try {
+			HttpSession session = request.getSession();
+
+			if("artista".equals(session.getAttribute("tipousuario"))) {
+				request.setAttribute("altaVisible", "visible");
+			} else {
+				request.setAttribute("altaVisible", "hidden");
+			}
+			List<PaqueteDTO> paquetes = paqueteController.listarPaquetes();
+			request.setAttribute("paquetes", paquetes);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/paquetes/listar-paquetes.jsp");
+			dispatcher.forward(request, response);
+		} catch (Exception e) {
+			request.setAttribute("errorMsg", "Hubo un problema al procesar su solicitud: "+e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/errores/error-generico.jsp");
+			dispatcher.forward(request, response);
+		}
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		try {
+			HttpSession session = request.getSession();
+			PaqueteDTO paquete = null;
+
+			// Agregar espectaculo a paquete
+			
+			if(request.getParameter("espectaculoParaAgregar")!=null ) {
+
+				paqueteController.agregarEspectaculoAPaquete(request.getParameter("espectaculoParaAgregar"),
+						request.getParameter("paquete_nombre"));
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/paquetes/confirmacion-espectaculo-paquete.jsp");
+				dispatcher.forward(request, response);
+			}
+			
+			if (request.getParameter("compra")!=null) {
+				compraPaquete(request, response);
+				
+				
+			} else if (request.getParameter("espectaculoParaAgregar")==null) {
+				//Control de permisos
+				if (session.getAttribute("tipousuario")==null ||!"artista".equals(session.getAttribute("tipousuario").toString())) {
+					request.setAttribute("errorMsg", "No tiene permisos para acceder a este recurso");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/errores/error-generico.jsp");
+					dispatcher.forward(request, response);
+				}
+
+				//Obtengo parametros
+				String imgPath = "";
+				String nombrePaquete = request.getParameter("nombre_paquete");
+				String descripcion = request.getParameter("descripcion_paquete");
+				String fechaInicioString = request.getParameter("vigencia_desde_paq");
+				String fechaFinString = request.getParameter("vigencia_hasta_paq");
+				int descuento = Integer.parseInt(request.getParameter("descuento_paquete"));
+
+				//Modificaciones necesarias para obtener las fechas correctas
+				SimpleDateFormat sdfInicio = new SimpleDateFormat("yyyy-MM-dd");
+				Date fechaInicio = null;
+				fechaInicio = sdfInicio.parse(fechaInicioString);
+				SimpleDateFormat sdfFin = new SimpleDateFormat("yyyy-MM-dd");
+				Date fechaFin = null;
+				fechaFin = sdfFin.parse(fechaFinString);
+
+				//Valido si es multipart
+				if(!ServletFileUpload.isMultipartContent(request)){
+					request.setAttribute("errorMsg", "El contenido no es multipart");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/errores/error-generico.jsp");
+					dispatcher.forward(request, response);
+				}
+
+				//Obtengo la imagen
+				Part filePart = request.getPart("imagen_paquete");
+				if (filePart.getSize()<=0) {
+<<<<<<< HEAD
+					imgPath = "/media/img/paquete-generico.png";
+				} else {
+					InputStream fileContent = filePart.getInputStream();
+					imgPath = FileUtils.saveFile(fileContent);
+				}
+=======
+			    	imgPath = "/media/img/paquete-generico.png";
+			    } else {
+			    	InputStream fileContent = filePart.getInputStream();
+				    imgPath = ImgUtils.saveFile(fileContent);
+			    }
+>>>>>>> c0b3ecf0f6afe3c3155ad9d7b401fa414cd076db
+
+				//Doy de alta el paquete y luego muestro su detalle
+				paqueteController.altaPaquete(nombrePaquete, descripcion, fechaInicio, fechaFin, descuento, imgPath);
+				paquete = paqueteController.consultaPaquete(nombrePaquete);
+
+				request.setAttribute("paquete", paquete);
+				request.setAttribute("compraVisible", "hidden");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/paquetes/detalle-paquete.jsp");
+				dispatcher.forward(request, response);
+			}
+
+		} catch (NotFoundException | BadRequestException | ParseException e) {
+			request.setAttribute("errorMsg", "Hubo un problema al procesar su solicitud: "+e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/errores/error-generico.jsp");
+			dispatcher.forward(request, response);
+		}
+
+	}
+
+	private void compraPaquete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		try {
+			HttpSession session = request.getSession();
+			paqueteController.compraPaquete(request.getParameter("paquete_name"), (String) session.getAttribute("email"), new Date());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/paquetes/compra-paquete.jsp");
+			dispatcher.forward(request, response);
+		} catch (Exception e) {
+			request.setAttribute("errorMsg", "Hubo un problema al procesar su solicitud: "+e.getMessage());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/errores/error-generico.jsp");
+			dispatcher.forward(request, response);
+		}
+
+	}
+
+	private boolean esVigente(Date fecha, PaqueteDTO paquete) {
+		return paquete.getFechaInicio().compareTo(fecha)<=0 && paquete.getFechaFin().compareTo(fecha)>0;
+	}
+
+}

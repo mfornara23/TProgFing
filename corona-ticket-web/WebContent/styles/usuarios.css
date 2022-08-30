@@ -1,0 +1,117 @@
+/* Style de la tab */
+.tab {
+    overflow: hidden;
+    width: fit-content;
+}
+
+/* Style de los botones */
+.tab button {
+    background-color: #f1f1f1;
+    float: left;
+    outline: none;
+    cursor: pointer;
+    padding: 6px 40px;
+    transition: 0.3s;
+    font-size: 15px;
+    font-family: inherit;
+    border: 1px solid #ccc;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+/* hover para la tab */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Pestaña activa */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Contenido de la tab */
+.tabcontent {
+    width: 85%;
+    display: none;
+    padding: 20px;
+    border: 1px solid #ccc;
+    min-height: 500px;
+}
+
+.user-row {
+    display: grid;
+    grid-template-columns: 50px 200px 140px 240px 200px 84px 66px;
+}
+
+.user-row-data {
+    align-self: center;
+}
+
+.follow {
+    align-self: center;
+}
+
+.follow:hover {
+    color: var(--light-blue-hover);
+    cursor: pointer;
+}
+
+.perfil-data-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.social-data-container {
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none !important;
+    color: var(--light-gray);
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.funciones-data-container {
+    width: 85%;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 4px;
+    text-decoration: none !important;
+    color: var(--light-gray);
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.social-data-container:hover {
+    background-color: #e6e8eb;
+    color: var(--light-gray) !important;
+}
+
+.seguidores-seguidos {
+    width: fit-content;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.seguidores-seguidos-container {
+    min-width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 5px;
+}
